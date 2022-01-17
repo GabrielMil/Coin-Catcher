@@ -34,8 +34,6 @@ namespace CoinCatcher
         private MediaPlayer coinSound;
         private MediaPlayer bombSound;
 
-        private Mutex mutex;
-
         //Getters and Setters
         public int CoinCount { get => coinCount; set => coinCount = value; }
         public bool IsRunning { get => isRunning; set => isRunning = value; }
@@ -63,9 +61,6 @@ namespace CoinCatcher
             //
             coinSound = MediaPlayer.Create(Context, Resource.Drawable.coinSound);
             bombSound = MediaPlayer.Create(Context, Resource.Drawable.bombSound);
-            //
-
-            //mutex = new Mutex();
         }
 
         //Function responsible for drawing on the canvas, updating UI
@@ -78,13 +73,12 @@ namespace CoinCatcher
             {
                 try
                 {
-
+                    canvas.DrawBitmap(obstacles[i].Bitmap, obstacles[i].X, obstacles[i].Y, null);
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e);
                 }
-                canvas.DrawBitmap(obstacles[i].Bitmap, obstacles[i].X, obstacles[i].Y, null);
             }
             //Draw the hero
             canvas.DrawBitmap(hero.Bitmap, hero.X, hero.Y, null);
@@ -160,9 +154,10 @@ namespace CoinCatcher
                         {
                             obstaclesToRemove.Add(obstacle);
                             //Check the type and act accordingly
-                            if (obstacle.Type == ObstacleType.Coin)
+                            if (obstacle is Coin)
                             {
-                                coinCount++;
+                                coinCount += ((Coin)obstacle).Value;
+                                ((Coin)obstacle).Value = 0;  // Prevent dublication
                                 coinSound.Start();
                             }
                             else
@@ -184,6 +179,7 @@ namespace CoinCatcher
                     }
                     catch (Exception e)
                     {
+                        Console.WriteLine(e);
                     }
                 }
                 Thread.Sleep(20);
@@ -197,9 +193,18 @@ namespace CoinCatcher
             {
                 while (obstacles.Count < MAX_OBSTACLES)
                 {
-                    //Spawn the  obstacle and choose teh type randomly
-                    ObstacleType type = (rand.Next() % 2 == 0) ? ObstacleType.Bomb : ObstacleType.Coin;
-                    obstacles.Add(new Obstacle(Context, type));
+                    //50/50 percent what type the obstacle is
+                    Obstacle obstacle = null;
+                    if (rand.Next() % 2 == 0)
+                    {
+                        obstacle = new Coin(Context);
+                    }
+                    else
+                    {
+                        obstacle = new Bomb(Context);
+                    }
+                    obstacles.Add(obstacle);
+                    Thread.Sleep(650);
                 }
                 Thread.Sleep(1500);
             }

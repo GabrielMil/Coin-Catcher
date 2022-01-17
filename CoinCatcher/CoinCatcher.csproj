@@ -63,6 +63,8 @@
   <ItemGroup>
     <Compile Include="BatteryBroadcast.cs" />
     <Compile Include="Classes\Background.cs" />
+    <Compile Include="Classes\Bomb.cs" />
+    <Compile Include="Classes\Coin.cs" />
     <Compile Include="Classes\DatabaseHandler.cs" />
     <Compile Include="Classes\GameObject.cs" />
     <Compile Include="Classes\Hero.cs" />
@@ -156,9 +158,6 @@
     <AndroidResource Include="Resources\drawable\character.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\coin.png" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\WiiMusic.mp3" />
   </ItemGroup>
   <ItemGroup>
@@ -169,6 +168,15 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\coinSound.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\purple_coin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\silver_coin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\yellow_coin.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

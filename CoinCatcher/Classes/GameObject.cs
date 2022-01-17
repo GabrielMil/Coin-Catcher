@@ -18,8 +18,8 @@ namespace CoinCatcher.Classes
     {
         protected Bitmap bitmap;
         protected int x, y, width, height, speed = 0;
-        private int displayY;
-        private int displayX;
+        protected int displayY;
+        protected int displayX;
 
         //C'tor
         public GameObject(Context context)

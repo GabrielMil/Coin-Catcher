@@ -18,6 +18,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/etPassword"
         android:hint="Password"
+        android:inputType="textPassword"
         android:layout_gravity="center"
         android:gravity="center"/>
     <Button
