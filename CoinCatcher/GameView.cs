@@ -65,7 +65,7 @@ namespace CoinCatcher
             bombSound = MediaPlayer.Create(Context, Resource.Drawable.bombSound);
             //
 
-            mutex = new Mutex();
+            //mutex = new Mutex();
         }
 
         //Function responsible for drawing on the canvas, updating UI
@@ -74,12 +74,18 @@ namespace CoinCatcher
             //Draw the background
             canvas.DrawBitmap(background.Bitmap, background.X, background.Y, null);
             //Draw the obstacles
-            mutex.WaitOne();
             for (int i = 0; i < obstacles.Count; i++)
             {
+                try
+                {
+
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
                 canvas.DrawBitmap(obstacles[i].Bitmap, obstacles[i].X, obstacles[i].Y, null);
             }
-            mutex.ReleaseMutex();
             //Draw the hero
             canvas.DrawBitmap(hero.Bitmap, hero.X, hero.Y, null);
             //Draw the score
@@ -119,7 +125,7 @@ namespace CoinCatcher
                     Draw(canvas);
                     surfaceHolder.UnlockCanvasAndPost(canvas);
                 }
-                Thread.Sleep(24);
+                Thread.Sleep(20);
             }
         }
 
@@ -132,37 +138,53 @@ namespace CoinCatcher
                 //Move each obstacle
                 for (int i = 0; i < obstacles.Count; i++)
                 {
-                    Obstacle obstacle = obstacles[i];
-                    obstacle.Move();
-                    //If out of boundries add to remove list
-                    if (obstacle.Y + obstacle.Height > displayY)
+                    Obstacle obstacle = null;
+                    try
                     {
-                        obstaclesToRemove.Add(obstacle);
+                        obstacle = obstacles[i];
                     }
-                    //If intesected with hero also remove it
-                    else if (Rect.Intersects(hero.GetRectShape(), obstacle.GetRectShape()))
+                    catch (Exception e)
                     {
-                        obstaclesToRemove.Add(obstacle);
-                        //Check the type and act accordingly
-                        if (obstacle.Type == ObstacleType.Coin)
+                        Console.WriteLine(e);
+                    }
+                    if (obstacle != null)
+                    {
+                        obstacle.Move();
+                        //If out of boundries add to remove list
+                        if (obstacle.Y + obstacle.Height > displayY)
                         {
-                            coinCount++;
-                            coinSound.Start();
+                            obstaclesToRemove.Add(obstacle);
                         }
-                        else
+                        //If intesected with hero also remove it
+                        else if (Rect.Intersects(hero.GetRectShape(), obstacle.GetRectShape()))
                         {
-                            isRunning = false;
-                            bombSound.Start();
+                            obstaclesToRemove.Add(obstacle);
+                            //Check the type and act accordingly
+                            if (obstacle.Type == ObstacleType.Coin)
+                            {
+                                coinCount++;
+                                coinSound.Start();
+                            }
+                            else
+                            {
+                                isRunning = false;
+                                bombSound.Start();
+                            }
                         }
                     }
+
                 }
                 hero.Move();
                 //After moving all the obstacles remove the needed to be remoev
                 for (int i = 0; i < obstaclesToRemove.Count; i++)
                 {
-                    mutex.WaitOne();
-                    obstacles.Remove(obstaclesToRemove.ElementAt(i));
-                    mutex.ReleaseMutex();
+                    try
+                    {
+                        obstacles.Remove(obstaclesToRemove.ElementAt(i));
+                    }
+                    catch (Exception e)
+                    {
+                    }
                 }
                 Thread.Sleep(20);
             }
@@ -175,11 +197,9 @@ namespace CoinCatcher
             {
                 while (obstacles.Count < MAX_OBSTACLES)
                 {
-                    mutex.WaitOne();
                     //Spawn the  obstacle and choose teh type randomly
                     ObstacleType type = (rand.Next() % 2 == 0) ? ObstacleType.Bomb : ObstacleType.Coin;
                     obstacles.Add(new Obstacle(Context, type));
-                    mutex.ReleaseMutex();
                 }
                 Thread.Sleep(1500);
             }
