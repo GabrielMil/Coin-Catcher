@@ -14,7 +14,9 @@ namespace CoinCatcher.Classes
 {
     class Coin : Obstacle
     {
+        //Create random for the type of the coin
         private static Random rand = new Random();
+        //Each type has its own value
         private int _value;
 
         public Coin(Context context) : base(context)

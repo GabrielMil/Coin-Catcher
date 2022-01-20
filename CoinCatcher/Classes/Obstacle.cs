@@ -22,6 +22,7 @@ namespace CoinCatcher.Classes
         //C'tor
         public Obstacle(Context context) : base(context)
         {
+            //Take only 1/7 of the screen width
             width = DisplayX / 7;
             //Put random x
             x = rand.Next(0, DisplayX-width);

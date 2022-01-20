@@ -17,8 +17,10 @@ namespace CoinCatcher
     [Service]
     class MusicService : Service
     {
+        //Conatain the data of the music, plays and stops it
         private MediaPlayer mediaPlayer;
 
+        //When starting Service this function plays the music
         [return: GeneratedEnum]
         public override StartCommandResult OnStartCommand(Intent intent, [GeneratedEnum] StartCommandFlags flags, int startId)
         {
@@ -28,6 +30,7 @@ namespace CoinCatcher
             return base.OnStartCommand(intent, flags, startId);
         }
 
+        //When ends Service stop the music
         public override void OnDestroy()
         {
             mediaPlayer.Stop();

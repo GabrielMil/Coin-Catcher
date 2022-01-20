@@ -15,8 +15,11 @@ namespace CoinCatcher.Classes
     //Class that used for list view, to show in the top 10
     public class ScoreItem
     {
+        //The user name
         private string _userName;
+        //The high score of the user
         private int _highScore;
+        //The time when the user achieved the high score
         private DateTime _time;
 
         //C'tor

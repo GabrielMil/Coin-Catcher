@@ -15,8 +15,10 @@ namespace CoinCatcher.Classes
     //Class for the list view
     public class ScoreAdapter : BaseAdapter<ScoreItem>
     {
-        Context context;
-        List<ScoreItem> objects;
+        //The context where the ListView will be
+        private Context context;
+        //The objects he will store and use for the ListView
+        private List<ScoreItem> objects;
 
         //C'tor
         public ScoreAdapter(Context context, List<ScoreItem> objects)

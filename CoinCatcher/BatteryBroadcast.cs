@@ -17,7 +17,8 @@ namespace CoinCatcher
     [IntentFilter(new[] { Intent.ActionBatteryChanged })]
     public class BatteryBroadcast : BroadcastReceiver
     {
-        TextView tv;
+        //TextView to display the battery percent
+        public TextView tv;
 
         //C'tor
         public BatteryBroadcast()
@@ -29,10 +30,25 @@ namespace CoinCatcher
             this.tv = tv;
         }
 
+        //When got the percent show the percent to user and notify if needed
         public override void OnReceive(Context context, Intent intent)
         {
+            //Get teh battery percent
             int battery = intent.GetIntExtra("level", 0);
             tv.Text = $"Your Battery Level: {battery}%";
+            //In case battery low notify user
+            if (battery <= 25)
+            {
+                //Build alert dialog
+                AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                alert.SetTitle("Low battery!!!");
+                alert.SetMessage($"Please charge your phone, it is {battery}%");
+                alert.SetCancelable(true);
+                alert.SetPositiveButton("Ok", ((senderAlert, args) => { }));
+
+                Dialog dialog = alert.Create();
+                dialog.Show();
+            };
         }
     }
 }

@@ -16,10 +16,16 @@ namespace CoinCatcher.Classes
     //Class that repressents the base object of all objects in the game
     class GameObject
     {
+        //The picture that represent teh object
         protected Bitmap bitmap;
-        protected int x, y, width, height, speed = 0;
-        protected int displayY;
-        protected int displayX;
+        //The location on the screen/canvas
+        protected int x, y;
+        //The size of it
+        protected int width, height;
+        //Movement speed of the object
+        protected int speed = 0;
+        //The size of the screen/canvas
+        protected int displayX, displayY;
 
         //C'tor
         public GameObject(Context context)
@@ -43,7 +49,7 @@ namespace CoinCatcher.Classes
         public virtual void Move()
         { }
 
-        //Get the Rect of the shape wich help to check when there is an intersect
+        //Get the Rect of the shape which help to check when there is an intersect
         public Rect GetRectShape()
         {
             return new Rect(x, y, x + width, y + height);

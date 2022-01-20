@@ -15,7 +15,9 @@ namespace CoinCatcher.Classes
     //Class that helps me handel and use the DB
     public class DatabaseHandler
     {
+        //The path of the DB
         private readonly string _path = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "myCoolDB");
+        //The connection to the db
         private SQLiteConnection _db;
 
         //Constructor, create connection adn create tables if not exists
