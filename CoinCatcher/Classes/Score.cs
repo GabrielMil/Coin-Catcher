@@ -26,5 +26,7 @@ namespace CoinCatcher.Classes
         public int HighScore { get; set; }
         [Column("time")]
         public DateTime Time { get; set; }
+
+        public Score() { }
     }
 }

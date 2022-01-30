@@ -28,5 +28,6 @@ namespace CoinCatcher.Classes
         public string Username { get; set; }
         [Column("password")]
         public string Password { get; set; }
+        public User() { }
     }
 }
